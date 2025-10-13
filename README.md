@@ -36,7 +36,7 @@ This enterprise-class N-Layer web application enables students and staff to brow
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-team/campus-bookstore.git
+git clone https://github.com/-------/campus-bookstore.git
 cd campus-bookstore
 ```
 
@@ -44,8 +44,8 @@ cd campus-bookstore
 Create a database and update `application.properties`:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/campus_bookstore
-spring.datasource.username=your_username
-spring.datasource.password=your_password
+spring.datasource.username=-------
+spring.datasource.password=-------
 ```
 
 ### 3. Build and run
