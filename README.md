@@ -43,7 +43,7 @@ cd campus-bookstore
 ### 2. Configure the database
 Create a database and update `application.properties`:
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/campus_bookstore
+spring.datasource.url=jdbc:mysql://localhost:----/campus_bookstore
 spring.datasource.username=-------
 spring.datasource.password=-------
 ```
@@ -54,7 +54,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-The application will be available at `http://localhost:8080`
+The application will be available at `http://localhost:----`
 
 ## Project Structure
 
