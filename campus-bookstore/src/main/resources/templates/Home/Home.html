@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Bookstore - Home</title>
+    <link rel="stylesheet" href="Home.css">
+
+</head>
+<body>
+    <div class="main">
+        <!-- Header Section -->
+        <header class="header">
+        <div class="container">
+            <h1 class="logo">CAMPUS BOOKSTORE</h1>
+            <nav class="nav">
+                <a href="../Home/Home.html">Home</a>
+                <a href="../Product/Products.html">Products</a>
+                <a href="../Cart/Cart.html">Cart</a>
+                <a href="../Login/Login.html">Login</a>
+                <a href="../Registation/Registation.html">Register</a>
+            </nav>
+        </div>
+    </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2>Find Your Textbooks</h2>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by title, author, ISBN...">
+                <button class="search-btn" onclick="handleSearch()">Search</button>
+            </div>
+        </section>
+
+        <!-- Featured Books Section -->
+        <section class="featured">
+            <h3>Featured Textbooks</h3>
+            <div class="books-grid">
+                <!-- Book Card 1 -->
+                <div class="book-card">
+                    <div class="book-image">Book Image</div>
+                    <div class="book-title">Introduction to Computer Science</div>
+                    <div class="book-price">$89.99</div>
+                    <a href="book1.html" class="details-btn">View Details</a>
+                </div>
+
+                <!-- Book Card 2 -->
+                <div class="book-card">
+                    <div class="book-image">Book Image</div>
+                    <div class="book-title">Calculus: Early Transcendentals</div>
+                    <div class="book-price">$75.50</div>
+                    <a href="book2.html" class="details-btn">View Details</a>
+                </div>
+
+                <!-- Book Card 3 -->
+                <div class="book-card">
+                    <div class="book-image">Book Image</div>
+                    <div class="book-title">Biology: The Core</div>
+                    <div class="book-price">$120.00</div>
+                    <a href="book3.html" class="details-btn">View Details</a>
+                </div>
+
+                <!-- Book Card 4 -->
+                <div class="book-card">
+                    <div class="book-image">Book Image</div>
+                    <div class="book-title">Psychology: An Introduction</div>
+                    <div class="book-price">$95.99</div>
+                    <a href="book4.html" class="details-btn">View Details</a>
+                </div>
+
+                <!-- Book Card 5 -->
+                <div class="book-card">
+                    <div class="book-image">Book Image</div>
+                    <div class="book-title">English Composition</div>
+                    <div class="book-price">$65.00</div>
+                    <a href="book5.html" class="details-btn">View Details</a>
+                </div>
+
+                <!-- Book Card 6 -->
+                <div class="book-card">
+                    <div class="book-image">Book Image</div>
+                    <div class="book-title">World History: Modern Era</div>
+                    <div class="book-price">$110.50</div>
+                    <a href="book6.html" class="details-btn">View Details</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="Home.js"></script>
+</body>
+</html>
