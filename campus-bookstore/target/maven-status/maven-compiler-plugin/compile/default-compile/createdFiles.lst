@@ -1,0 +1,7 @@
+com/gcu/bookstore/controller/LoginController.class
+com/gcu/bookstore/model/User.class
+com/gcu/bookstore/service/CampusBookstoreApplication.class
+com/gcu/bookstore/service/UserService.class
+com/gcu/bookstore/model/LoginForm.class
+com/gcu/bookstore/controller/RegistrationController.class
+com/gcu/bookstore/controller/HomeController.class

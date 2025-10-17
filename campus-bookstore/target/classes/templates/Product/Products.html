@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Bookstore</title>
+    <link rel="stylesheet" href="Products.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">CAMPUS BOOKSTORE</h1>
+            <nav class="nav">
+                <a href="../Home/Home.html">Home</a>
+                <a href="../Product/Products.html">Products</a>
+                <a href="../Cart/Cart.html">Cart</a>
+                <a href="../Login/Login.html">Login</a>
+                <a href="../Registation/Registation.html">Register</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="content-header">
+                <h2>All Products</h2>
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="addProductBtn">Add Product</button>
+                    <button class="btn btn-secondary" id="editBtn">Edit</button>
+                    <button class="btn btn-secondary" id="deleteBtn">Delete</button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>ISBN</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <!-- Products will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="Products.js"></script>
+</body>
+</html>
