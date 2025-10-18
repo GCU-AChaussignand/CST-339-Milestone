@@ -1,25 +1,18 @@
 package com.gcu.bookstore.model;
 
-/**
- * Book Model
- * Represents a book/textbook in the bookstore
- * For Milestone 2: Used for in-memory data
- * Will be connected to database in Milestone 4
- */
 public class BookModel {
     
     private Long id;
     private String title;
     private String author;
     private String isbn;
-    private String course;  // e.g., "CST-339", "MATH-101"
-    private String subject; // e.g., "Computer Science", "Mathematics"
+    private String course; 
+    private String subject; 
     private Double price;
     private Integer stock;
     private String imageUrl;
     private String description;
     
-    // Constructors
     public BookModel() {
     }
     
@@ -37,7 +30,6 @@ public class BookModel {
         this.description = description;
     }
     
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -117,14 +109,9 @@ public class BookModel {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    /**
-     * Helper method to check if this book matches a search query
-     * Searches across: title, author, ISBN, course, and subject
-     */
     public boolean matchesSearch(String query) {
         if (query == null || query.trim().isEmpty()) {
-            return true; // No search query, show all
+            return true; 
         }
         
         String lowerQuery = query.toLowerCase().trim();

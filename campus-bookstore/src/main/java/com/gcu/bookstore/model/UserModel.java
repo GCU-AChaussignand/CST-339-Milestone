@@ -5,10 +5,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-/**
- * User model for registration
- * Represents a user in the bookstore application
- */
 public class UserModel {
     
     @NotEmpty(message = "First name is required")
@@ -36,7 +32,6 @@ public class UserModel {
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
     
-    // Constructors
     public UserModel() {
     }
     
@@ -50,7 +45,6 @@ public class UserModel {
         this.password = password;
     }
     
-    // Getters and Setters
     public String getFirstName() {
         return firstName;
     }

@@ -8,28 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.gcu.bookstore.model.BookModel;
 
-/**
- * Book Service
- * Handles book-related business logic
- * For Milestone 2: Uses in-memory ArrayList
- * Will be refactored to use database in Milestone 4
- */
 @Service
 public class BookService {
     
     private List<BookModel> books;
-    
-    /**
-     * Constructor - Initialize with sample data
-     */
+
     public BookService() {
         books = new ArrayList<>();
         initializeSampleData();
     }
-    
-    /**
-     * Initialize sample book data for testing
-     */
+
     private void initializeSampleData() {
         books.add(new BookModel(
             1L,
@@ -161,18 +149,11 @@ public class BookService {
             "Statistical methods for business analysis"
         ));
     }
-    
-    /**
-     * Get all books
-     */
+
     public List<BookModel> getAllBooks() {
         return new ArrayList<>(books);
     }
-    
-    /**
-     * Search books by query
-     * Searches across: title, author, ISBN, course, subject
-     */
+
     public List<BookModel> searchBooks(String query) {
         if (query == null || query.trim().isEmpty()) {
             return getAllBooks();
@@ -182,20 +163,14 @@ public class BookService {
                 .filter(book -> book.matchesSearch(query))
                 .collect(Collectors.toList());
     }
-    
-    /**
-     * Get book by ID
-     */
+  
     public BookModel getBookById(Long id) {
         return books.stream()
                 .filter(book -> book.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
-    
-    /**
-     * Get total number of books
-     */
+
     public int getTotalBooks() {
         return books.size();
     }

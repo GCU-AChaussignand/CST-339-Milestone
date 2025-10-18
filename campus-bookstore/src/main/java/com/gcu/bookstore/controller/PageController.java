@@ -11,27 +11,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gcu.bookstore.model.BookModel;
 import com.gcu.bookstore.service.BookService;
 
-/**
- * Page Controller
- * Handles navigation for public pages
- */
 @Controller
 public class PageController {
     
     @Autowired
     private BookService bookService;
     
-    /**
-     * Display home page
-     */
     @GetMapping("/")
     public String home() {
         return "home";
     }
     
-    /**
-     * Display products page with optional search
-     */
     @GetMapping("/products")
     public String products(@RequestParam(required = false) String search, Model model) {
         List<BookModel> books;
@@ -49,27 +39,17 @@ public class PageController {
         model.addAttribute("resultCount", books.size());
         return "products";
     }
-    
-    /**
-     * Handle search from home page
-     */
+
     @GetMapping("/search")
     public String search(@RequestParam String query) {
-        // Redirect to products page with search parameter
         return "redirect:/products?search=" + query;
     }
-    
-    /**
-     * Display cart page
-     */
+
     @GetMapping("/cart")
     public String cart() {
         return "cart";
     }
-    
-    /**
-     * Display checkout page
-     */
+
     @GetMapping("/checkout")
     public String checkout() {
         return "checkout";

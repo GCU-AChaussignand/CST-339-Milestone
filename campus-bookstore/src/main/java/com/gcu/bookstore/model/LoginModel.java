@@ -2,10 +2,6 @@ package com.gcu.bookstore.model;
 
 import jakarta.validation.constraints.NotEmpty;
 
-/**
- * Login model for user authentication
- * Represents login credentials
- */
 public class LoginModel {
     
     @NotEmpty(message = "Username is required")
@@ -14,7 +10,6 @@ public class LoginModel {
     @NotEmpty(message = "Password is required")
     private String password;
     
-    // Constructors
     public LoginModel() {
     }
     
@@ -23,7 +18,6 @@ public class LoginModel {
         this.password = password;
     }
     
-    // Getters and Setters
     public String getUsername() {
         return username;
     }
