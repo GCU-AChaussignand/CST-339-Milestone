@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Campus Bookstore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --nav-bg: #e8e8e8;
+            --card-bg: #ffffff;
+            --border-color: #d0d0d0;
+        }
+        
+        body {
+            background-color: #fafafa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+        }
+        
+        /* Navigation Bar */
+        .custom-navbar {
+            background-color: var(--nav-bg);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        
+        .nav-link {
+            color: #555;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: #d8d8d8;
+            color: #333;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+            padding: 2rem 0;
+        }
+        
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        /* Cart Section */
+        .cart-section {
+            padding: 2rem 0;
+        }
+        
+        .cart-table-container {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .cart-table th {
+            background-color: #f5f5f5;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #555;
+            border: 1px solid var(--border-color);
+        }
+        
+        .cart-table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            color: #333;
+        }
+        
+        .cart-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .quantity-input {
+            width: 60px;
+            padding: 0.4rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .remove-btn {
+            background-color: #6c757d;
+            border: 1px solid #5a6268;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        
+        .remove-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        /* Summary Box */
+        .cart-summary {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+        }
+        
+        .summary-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
+            color: #555;
+        }
+        
+        .summary-row.total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #333;
+            padding-top: 0.75rem;
+            margin-top: 0.75rem;
+            border-top: 2px solid var(--border-color);
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background-color: #6c757d;
+            border: 1px solid #5a6268;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        /* Footer */
+        .custom-footer {
+            background-color: var(--nav-bg);
+            border-top: 2px solid var(--border-color);
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">CAMPUS BOOKSTORE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/cart">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login/Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">Shopping Cart</h1>
+        </div>
+    </div>
+
+    <!-- Cart Content -->
+    <section class="cart-section">
+        <div class="container">
+            <div class="row">
+                <!-- Cart Items Table -->
+                <div class="col-lg-8">
+                    <div class="cart-table-container">
+                        <table class="cart-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Title</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Book Image</td>
+                                    <td>Introduction to Algorithms</td>
+                                    <td>$89.99</td>
+                                    <td>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                    </td>
+                                    <td>$89.99</td>
+                                    <td>
+                                        <button class="remove-btn">Remove</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Book Image</td>
+                                    <td>Calculus Early Transcendentals</td>
+                                    <td>$120.00</td>
+                                    <td>
+                                        <input type="number" class="quantity-input" value="2" min="1">
+                                    </td>
+                                    <td>$240.00</td>
+                                    <td>
+                                        <button class="remove-btn">Remove</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Book Image</td>
+                                    <td>Introduction to Psychology</td>
+                                    <td>$75.99</td>
+                                    <td>
+                                        <input type="number" class="quantity-input" value="1" min="1">
+                                    </td>
+                                    <td>$75.99</td>
+                                    <td>
+                                        <button class="remove-btn">Remove</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="col-lg-4">
+                    <div class="cart-summary">
+                        <h2 class="summary-title">Order Summary</h2>
+                        
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span>$405.98</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Tax (8%):</span>
+                            <span>$32.48</span>
+                        </div>
+                        
+                        <div class="summary-row">
+                            <span>Shipping:</span>
+                            <span>$5.99</span>
+                        </div>
+                        
+                        <div class="summary-row total">
+                            <span>Total:</span>
+                            <span>$444.45</span>
+                        </div>
+                        
+                        <button class="checkout-btn" onclick="location.href='/checkout'">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="custom-footer text-center">
+        <div class="container">
+            <p class="mb-0 text-muted">&copy; 2025 Campus Bookstore - CST-339 Milestone 2</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
