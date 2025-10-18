@@ -2,5 +2,21 @@
   "java.project.sourcePaths": [
     "src/main/java"
   ],
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "My Local MySQL",
+      "database": "bookstore_test",
+      "username": "root"
+    }
+  ]
 }
