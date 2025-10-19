@@ -1,4 +1,3 @@
-// Initial cart data
 let cartItems = [
     {
         id: 1,
@@ -23,13 +22,11 @@ let cartItems = [
 const TAX_RATE = 0.08;
 const SHIPPING_FEE = 5.99;
 
-// Initialize cart on page load
 document.addEventListener('DOMContentLoaded', function() {
     renderCart();
     updateTotals();
 });
 
-// Render cart items
 function renderCart() {
     const cartItemsContainer = document.getElementById('cart-items');
     cartItemsContainer.innerHTML = '';
@@ -60,7 +57,6 @@ function renderCart() {
     });
 }
 
-// Update quantity
 function updateQuantity(itemId, newQuantity) {
     const quantity = parseInt(newQuantity);
     
@@ -78,7 +74,6 @@ function updateQuantity(itemId, newQuantity) {
     }
 }
 
-// Remove item from cart
 function removeItem(itemId) {
     if (confirm('Are you sure you want to remove this item?')) {
         cartItems = cartItems.filter(item => item.id !== itemId);
@@ -87,12 +82,8 @@ function removeItem(itemId) {
     }
 }
 
-// Calculate and update totals
 function updateTotals() {
-    const subtotal = cartItems.reduce((sum, item) => {
-        return sum + (item.price * item.quantity);
-    }, 0);
-    
+    const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const tax = subtotal * TAX_RATE;
     const shipping = cartItems.length > 0 ? SHIPPING_FEE : 0;
     const total = subtotal + tax + shipping;
@@ -103,7 +94,6 @@ function updateTotals() {
     document.getElementById('total').textContent = `$${total.toFixed(2)}`;
 }
 
-// Checkout button handler
 document.addEventListener('DOMContentLoaded', function() {
     const checkoutBtn = document.querySelector('.checkout-btn');
     if (checkoutBtn) {
@@ -112,7 +102,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Your cart is empty!');
             } else {
                 alert('Proceeding to checkout...');
-                // Add checkout logic here
             }
         });
     }

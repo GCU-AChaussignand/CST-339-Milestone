@@ -1,4 +1,3 @@
-// Sample product data
 const products = [
     {
         id: 1,
@@ -34,7 +33,6 @@ const products = [
     }
 ];
 
-// Function to render products table
 function renderProducts() {
     const tableBody = document.getElementById('productsTableBody');
     tableBody.innerHTML = '';
@@ -58,7 +56,6 @@ function renderProducts() {
     });
 }
 
-// Function to view product details
 function viewDetails(productId) {
     const product = products.find(p => p.id === productId);
     if (product) {
@@ -66,7 +63,6 @@ function viewDetails(productId) {
     }
 }
 
-// Event listeners for action buttons
 document.getElementById('addProductBtn').addEventListener('click', function() {
     alert('Add Product functionality would be implemented here');
 });
@@ -79,7 +75,6 @@ document.getElementById('deleteBtn').addEventListener('click', function() {
     alert('Delete functionality would be implemented here');
 });
 
-// Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
     renderProducts();
 });

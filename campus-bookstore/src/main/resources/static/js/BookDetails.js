@@ -1,12 +1,9 @@
-// Cart functionality
 const cartBtn = document.querySelector('.btn-cart');
 const wishlistBtn = document.querySelector('.btn-wishlist');
 
-// Cart state
 let cart = [];
 let wishlist = [];
 
-// Add to Cart functionality
 cartBtn.addEventListener('click', function() {
     const product = {
         title: 'Introduction to Algorithms',
@@ -16,7 +13,6 @@ cartBtn.addEventListener('click', function() {
         quantity: 1
     };
 
-    // Check if product already in cart
     const existingItem = cart.find(item => item.isbn === product.isbn);
     
     if (existingItem) {
@@ -31,7 +27,6 @@ cartBtn.addEventListener('click', function() {
     updateCartDisplay();
 });
 
-// Add to Wishlist functionality
 wishlistBtn.addEventListener('click', function() {
     const product = {
         title: 'Introduction to Algorithms',
@@ -40,7 +35,6 @@ wishlistBtn.addEventListener('click', function() {
         price: 89.99
     };
 
-    // Check if already in wishlist
     const existingItem = wishlist.find(item => item.isbn === product.isbn);
     
     if (existingItem) {
@@ -53,7 +47,6 @@ wishlistBtn.addEventListener('click', function() {
     console.log('Current wishlist:', wishlist);
 });
 
-// Navigation buttons functionality
 const navButtons = document.querySelectorAll('.nav-btn');
 
 navButtons.forEach(button => {
@@ -61,8 +54,6 @@ navButtons.forEach(button => {
         const page = this.textContent;
         console.log(`Navigating to: ${page}`);
         
-        // In a real application, this would navigate to different pages
-        // For now, we'll just show an alert
         if (page === 'Cart') {
             showCart();
         } else {
@@ -71,7 +62,6 @@ navButtons.forEach(button => {
     });
 });
 
-// Display cart contents
 function showCart() {
     if (cart.length === 0) {
         alert('Your cart is empty!');
@@ -92,12 +82,9 @@ function showCart() {
     alert(cartContents);
 }
 
-// Update cart display (could be used to update a cart icon badge)
 function updateCartDisplay() {
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     console.log(`Total items in cart: ${totalItems}`);
-    // In a real application, this would update a cart badge or counter
 }
 
-// Initialize
 console.log('Campus Bookstore loaded successfully!');

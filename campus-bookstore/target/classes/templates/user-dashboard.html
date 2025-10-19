@@ -219,7 +219,6 @@
     </style>
 </head>
 <body>
-    <!-- Top Navigation -->
     <div class="top-navbar">
         <div class="brand-title">CAMPUS BOOKSTORE</div>
         <div class="top-nav-buttons">
@@ -229,9 +228,7 @@
         </div>
     </div>
 
-    <!-- Main Container -->
     <div class="user-container">
-        <!-- Sidebar Navigation -->
         <aside class="sidebar">
             <div class="sidebar-title">My Account</div>
             <a href="/user/dashboard" class="nav-item active">Dashboard</a>
@@ -241,15 +238,12 @@
             <a href="/products" class="nav-item">Browse Books</a>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
-            <!-- Welcome Banner -->
             <div class="welcome-banner">
                 <h1 class="welcome-title">Welcome back, <span th:text="${username}">User</span>!</h1>
                 <p class="welcome-text">Here's an overview of your account activity</p>
             </div>
 
-            <!-- Info Cards -->
             <div class="info-cards">
                 <div class="info-card">
                     <div class="info-card-title">Total Orders</div>
@@ -265,7 +259,6 @@
                 </div>
             </div>
 
-            <!-- Recent Orders -->
             <div class="orders-section">
                 <h2 class="section-title">Recent Orders</h2>
                 <table class="orders-table">
