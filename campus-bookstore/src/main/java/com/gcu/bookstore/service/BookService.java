@@ -11,7 +11,7 @@ import com.gcu.bookstore.model.BookModel;
 @Service
 public class BookService {
     
-    private List<BookModel> books;
+    private final List<BookModel> books;
 
     public BookService() {
         books = new ArrayList<>();

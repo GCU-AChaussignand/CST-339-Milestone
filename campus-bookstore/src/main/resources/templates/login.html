@@ -223,6 +223,10 @@
                     Registration successful! Please login.
                 </div>
                 
+                <div th:if="${param.logout}" class="alert alert-info" role="alert">
+                    You have been logged out successfully.
+                </div>
+                
                 <form th:action="@{/login}" th:object="${loginModel}" method="post">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
