@@ -1,18 +1,56 @@
 package com.gcu.bookstore.model;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+/**
+ * Book Model
+ * Represents a book/textbook in the bookstore
+ * For Milestone 2-3: Used for in-memory data
+ * Will be connected to database in Milestone 4
+ * 
+ * @author Campus Bookstore Team
+ * @version 1.0
+ */
 public class BookModel {
     
     private Long id;
+    
+    @NotEmpty(message = "Title is required")
+    @Size(min = 2, max = 200, message = "Title must be between 2 and 200 characters")
     private String title;
+    
+    @NotEmpty(message = "Author is required")
+    @Size(min = 2, max = 200, message = "Author must be between 2 and 200 characters")
     private String author;
+    
+    @NotEmpty(message = "ISBN is required")
+    @Size(min = 10, max = 17, message = "ISBN must be between 10 and 17 characters")
     private String isbn;
-    private String course; 
-    private String subject; 
+    
+    @NotEmpty(message = "Course code is required")
+    @Size(min = 3, max = 20, message = "Course code must be between 3 and 20 characters")
+    private String course;
+    
+    @NotEmpty(message = "Subject is required")
+    @Size(min = 2, max = 50, message = "Subject must be between 2 and 50 characters")
+    private String subject;
+    
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.01", message = "Price must be greater than 0")
     private Double price;
+    
+    @NotNull(message = "Stock quantity is required")
+    @Min(value = 0, message = "Stock cannot be negative")
     private Integer stock;
+    
     private String imageUrl;
     private String description;
     
+    // Constructors
     public BookModel() {
     }
     
@@ -30,6 +68,7 @@ public class BookModel {
         this.description = description;
     }
     
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -109,9 +148,14 @@ public class BookModel {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    /**
+     * Helper method to check if this book matches a search query
+     * Searches across: title, author, ISBN, course, and subject
+     */
     public boolean matchesSearch(String query) {
         if (query == null || query.trim().isEmpty()) {
-            return true; 
+            return true; // No search query, show all
         }
         
         String lowerQuery = query.toLowerCase().trim();

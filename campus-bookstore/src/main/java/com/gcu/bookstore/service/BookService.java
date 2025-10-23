@@ -8,16 +8,28 @@ import org.springframework.stereotype.Service;
 
 import com.gcu.bookstore.model.BookModel;
 
+/**
+ * Book Service
+ * Handles book-related business logic
+ * For Milestone 2: Uses in-memory ArrayList
+ * Will be refactored to use database in Milestone 4
+ */
 @Service
 public class BookService {
     
     private final List<BookModel> books;
-
+    
+    /**
+     * Constructor - Initialize with sample data
+     */
     public BookService() {
         books = new ArrayList<>();
         initializeSampleData();
     }
-
+    
+    /**
+     * Initialize sample book data for testing
+     */
     private void initializeSampleData() {
         books.add(new BookModel(
             1L,
@@ -149,11 +161,18 @@ public class BookService {
             "Statistical methods for business analysis"
         ));
     }
-
+    
+    /**
+     * Get all books
+     */
     public List<BookModel> getAllBooks() {
         return new ArrayList<>(books);
     }
-
+    
+    /**
+     * Search books by query
+     * Searches across: title, author, ISBN, course, subject
+     */
     public List<BookModel> searchBooks(String query) {
         if (query == null || query.trim().isEmpty()) {
             return getAllBooks();
@@ -163,15 +182,86 @@ public class BookService {
                 .filter(book -> book.matchesSearch(query))
                 .collect(Collectors.toList());
     }
-  
+    
+    /**
+     * Get book by ID
+     */
     public BookModel getBookById(Long id) {
         return books.stream()
                 .filter(book -> book.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
-
+    
+    /**
+     * Get total number of books
+     */
     public int getTotalBooks() {
         return books.size();
+    }
+    
+    /**
+     * Add a new book to the system
+     * For Milestone 3: Adds to in-memory list
+     * Will be replaced with database insert in Milestone 4
+     * 
+     * @param book The book to add
+     * @return true if successful, false otherwise
+     */
+    public boolean addBook(BookModel book) {
+        try {
+            // Generate new ID
+            Long newId = books.stream()
+                    .mapToLong(BookModel::getId)
+                    .max()
+                    .orElse(0L) + 1;
+            
+            book.setId(newId);
+            books.add(book);
+            
+            System.out.println("Book added successfully! Total books: " + books.size());
+            return true;
+        } catch (Exception e) {
+            System.err.println("Error adding book: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Update an existing book
+     * For Milestone 3: Updates in-memory list
+     * 
+     * @param book The book with updated information
+     * @return true if successful, false otherwise
+     */
+    public boolean updateBook(BookModel book) {
+        try {
+            for (int i = 0; i < books.size(); i++) {
+                if (books.get(i).getId().equals(book.getId())) {
+                    books.set(i, book);
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            System.err.println("Error updating book: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Delete a book by ID
+     * For Milestone 3: Removes from in-memory list
+     * 
+     * @param id The ID of the book to delete
+     * @return true if successful, false otherwise
+     */
+    public boolean deleteBook(Long id) {
+        try {
+            return books.removeIf(book -> book.getId().equals(id));
+        } catch (Exception e) {
+            System.err.println("Error deleting book: " + e.getMessage());
+            return false;
+        }
     }
 }
