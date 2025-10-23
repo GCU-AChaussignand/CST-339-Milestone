@@ -1,0 +1,11 @@
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/BookstoreApplication.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/controller/AdminController.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/controller/LoginController.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/controller/PageController.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/controller/RegistrationController.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/controller/UserController.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/model/BookModel.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/model/LoginModel.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/model/UserModel.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/service/BookService.java
+/Users/aaronchaussignand/Documents/GitHub/CST-339-Milestone/campus-bookstore/src/main/java/com/gcu/bookstore/service/UserService.java
