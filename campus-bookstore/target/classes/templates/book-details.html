@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${book.title} + ' - Campus Bookstore'">Book Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --nav-bg: #e8e8e8;
+            --card-bg: #ffffff;
+            --border-color: #d0d0d0;
+            --text-dark: #333;
+            --text-light: #666;
+        }
+        
+        body {
+            background-color: #fafafa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+        }
+        
+        /* Navigation */
+        .custom-navbar {
+            background-color: var(--nav-bg);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 0;
+        }
+        
+        .navbar-brand {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+        
+        .nav-link {
+            color: #555;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .nav-link:hover {
+            background-color: #d8d8d8;
+            color: var(--text-dark);
+        }
+        
+        /* Book Details Container */
+        .details-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .details-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .book-image-container {
+            background-color: #f5f5f5;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+        
+        .book-image-placeholder {
+            color: #999;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .book-info {
+            padding-left: 2rem;
+        }
+        
+        .book-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-author {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        
+        .book-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .meta-item {
+            display: flex;
+            font-size: 0.95rem;
+        }
+        
+        .meta-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            width: 120px;
+        }
+        
+        .meta-value {
+            color: var(--text-light);
+        }
+        
+        .book-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 1rem 0;
+        }
+        
+        .availability {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .in-stock {
+            color: #28a745;
+            font-weight: 600;
+        }
+        
+        .low-stock {
+            color: #ffc107;
+            font-weight: 600;
+        }
+        
+        .out-of-stock {
+            color: #dc3545;
+            font-weight: 600;
+        }
+        
+        .description-section {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .description-text {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-add-cart {
+            background-color: #28a745;
+            border: 1px solid #218838;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1rem;
+            flex: 1;
+            max-width: 250px;
+        }
+        
+        .btn-add-cart:hover {
+            background-color: #218838;
+            color: white;
+        }
+        
+        .btn-add-cart:disabled {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .btn-wishlist {
+            background-color: white;
+            border: 2px solid var(--border-color);
+            color: var(--text-dark);
+            padding: 0.75rem 2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .btn-wishlist:hover {
+            background-color: #f5f5f5;
+            color: var(--text-dark);
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: var(--text-light);
+            text-decoration: none;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .back-link:hover {
+            color: var(--text-dark);
+            text-decoration: underline;
+        }
+        
+        .login-prompt {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+        
+        .login-prompt a {
+            color: #856404;
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .book-info {
+                padding-left: 0;
+                margin-top: 1.5rem;
+            }
+            
+            .book-title {
+                font-size: 1.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-add-cart {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">CAMPUS BOOKSTORE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">Cart</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.isLoggedIn == null}">
+                        <a class="nav-link" href="/login">Login/Register</a>
+                    </li>
+                    <li class="nav-item" th:if="${session.isLoggedIn != null}">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Book Details -->
+    <div class="details-container">
+        <a href="/products" class="back-link">← Back to Products</a>
+        
+        <div class="details-card">
+            <div class="row">
+                <!-- Book Image -->
+                <div class="col-md-5">
+                    <div class="book-image-container">
+                        <div class="book-image-placeholder">
+                            [Large Book Image]
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Book Information -->
+                <div class="col-md-7 book-info">
+                    <!-- Title -->
+                    <div class="section-title">TITLE</div>
+                    <h1 class="book-title" th:text="${book.title}">Book Title</h1>
+                    
+                    <!-- Author -->
+                    <div class="section-title mt-3">AUTHOR</div>
+                    <p class="book-author" th:text="${book.author}">Author Name</p>
+                    
+                    <!-- Meta Information -->
+                    <div class="book-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">ISBN:</span>
+                            <span class="meta-value" th:text="${book.isbn}">000-0000000000</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Course:</span>
+                            <span class="meta-value" th:text="${book.course}">COURSE-000</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Subject:</span>
+                            <span class="meta-value" th:text="${book.subject}">Subject</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Price -->
+                    <div class="section-title">PRICE</div>
+                    <div class="book-price" th:text="'$' + ${#numbers.formatDecimal(book.price, 1, 2)}">$0.00</div>
+                    
+                    <!-- Availability -->
+                    <div class="section-title">AVAILABILITY</div>
+                    <div class="availability">
+                        <span th:if="${book.stock > 10}" class="in-stock">
+                            In Stock (<span th:text="${book.stock}">0</span> units)
+                        </span>
+                        <span th:if="${book.stock > 0 && book.stock <= 10}" class="low-stock">
+                            Low Stock (<span th:text="${book.stock}">0</span> units remaining)
+                        </span>
+                        <span th:if="${book.stock == 0}" class="out-of-stock">
+                            Out of Stock
+                        </span>
+                    </div>
+                    
+                    <!-- Description -->
+                    <div class="description-section" th:if="${book.description}">
+                        <div class="section-title">DESCRIPTION</div>
+                        <p class="description-text" th:text="${book.description}">
+                            Book description goes here...
+                        </p>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <!-- Show if user is logged in -->
+                        <div th:if="${session.isLoggedIn != null}" style="flex: 1;">
+                            <button class="btn btn-add-cart w-100" 
+                                    th:disabled="${book.stock == 0}"
+                                    onclick="alert('Added to cart! (Database integration in Milestone 4)')">
+                                <span th:if="${book.stock > 0}">Add to Cart</span>
+                                <span th:if="${book.stock == 0}">Out of Stock</span>
+                            </button>
+                        </div>
+                        
+                        <!-- Show if user is NOT logged in -->
+                        <div th:if="${session.isLoggedIn == null}" style="flex: 1;">
+                            <button class="btn btn-add-cart w-100" onclick="location.href='/login'">
+                                Login to Purchase
+                            </button>
+                        </div>
+                        
+                        <button class="btn btn-wishlist" 
+                                th:if="${session.isLoggedIn != null}"
+                                onclick="alert('Added to wishlist! (Feature coming in Milestone 4)')">
+                            Add to Wishlist
+                        </button>
+                    </div>
+                    
+                    <!-- Login Prompt for Non-Logged In Users -->
+                    <div th:if="${session.isLoggedIn == null}" class="login-prompt">
+                        <strong>Note:</strong> You must <a href="/login">login</a> or <a href="/register">create an account</a> to purchase this book.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gcu.bookstore.service.BookService;
+import com.gcu.bookstore.service.UserService;
 
 /**
  * Admin Controller
  * Handles admin dashboard and management pages
- * Note: For Milestone 2-3, this is a basic implementation
- * Security will be added in Milestone 6
  */
 @Controller
 @RequestMapping("/admin")
@@ -21,12 +20,16 @@ public class AdminController {
     @Autowired
     private BookService bookService;
     
+    @Autowired
+    private UserService userService;
+    
     /**
      * Display admin dashboard with overview stats
      */
     @GetMapping("/dashboard")
     public String showDashboard(Model model) {
         model.addAttribute("totalBooks", bookService.getTotalBooks());
+        model.addAttribute("totalUsers", userService.getTotalUsers());
         return "admin-dashboard";
     }
     
@@ -51,7 +54,9 @@ public class AdminController {
      * Display users management page
      */
     @GetMapping("/users")
-    public String showUsers() {
+    public String showUsers(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("totalUsers", userService.getTotalUsers());
         return "admin-users";
     }
     
@@ -67,7 +72,9 @@ public class AdminController {
      * Display settings page
      */
     @GetMapping("/settings")
-    public String showSettings() {
+    public String showSettings(Model model) {
+        model.addAttribute("totalBooks", bookService.getTotalBooks());
+        model.addAttribute("totalUsers", userService.getTotalUsers());
         return "admin-settings";
     }
 }

@@ -6,22 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gcu.bookstore.model.BookModel;
 import com.gcu.bookstore.service.BookService;
 
+/**
+ * Page Controller
+ * Handles navigation for public pages
+ */
 @Controller
 public class PageController {
     
     @Autowired
     private BookService bookService;
     
+    /**
+     * Display home page
+     */
     @GetMapping("/")
     public String home() {
         return "home";
     }
     
+    /**
+     * Display products page with optional search
+     */
     @GetMapping("/products")
     public String products(@RequestParam(required = false) String search, Model model) {
         List<BookModel> books;
@@ -39,17 +50,46 @@ public class PageController {
         model.addAttribute("resultCount", books.size());
         return "products";
     }
-
+    
+    /**
+     * Display individual book details
+     * 
+     * @param id Book ID
+     * @param model Spring Model
+     * @return book details view
+     */
+    @GetMapping("/products/{id}")
+    public String bookDetails(@PathVariable Long id, Model model) {
+        BookModel book = bookService.getBookById(id);
+        
+        if (book == null) {
+            return "redirect:/products";
+        }
+        
+        model.addAttribute("book", book);
+        return "book-details";
+    }
+    
+    /**
+     * Handle search from home page
+     */
     @GetMapping("/search")
     public String search(@RequestParam String query) {
+        // Redirect to products page with search parameter
         return "redirect:/products?search=" + query;
     }
-
+    
+    /**
+     * Display cart page
+     */
     @GetMapping("/cart")
     public String cart() {
         return "cart";
     }
-
+    
+    /**
+     * Display checkout page
+     */
     @GetMapping("/checkout")
     public String checkout() {
         return "checkout";
