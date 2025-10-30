@@ -1,17 +1,18 @@
 package com.gcu.bookstore.controller;
 
-import com.gcu.bookstore.model.LoginCredentials;
-import com.gcu.bookstore.model.User;
-import com.gcu.bookstore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.gcu.bookstore.model.LoginModel;
+import com.gcu.bookstore.model.UserModel;
+import com.gcu.bookstore.service.UserService;
+
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -19,37 +20,60 @@ public class LoginController {
     @Autowired
     private UserService userService;
     
+    
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        model.addAttribute("credentials", new LoginCredentials());
+        model.addAttribute("loginModel", new LoginModel());
         return "login";
     }
     
+    
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute("credentials") LoginCredentials credentials,
-                       BindingResult result,
-                       HttpSession session,
-                       RedirectAttributes redirectAttributes) {
+    public String processLogin(@Valid LoginModel loginModel, 
+                              BindingResult result, 
+                              Model model,
+                              HttpSession session) {
+        
         if (result.hasErrors()) {
             return "login";
         }
         
-        if (userService.authenticateUser(credentials.getUsername(), credentials.getPassword())) {
-            Optional<User> user = userService.findByUsername(credentials.getUsername());
-            if (user.isPresent()) {
-                session.setAttribute("user", user.get());
-                return "redirect:/";
-            }
-        }
+        System.out.println("=== LOGIN ATTEMPT ===");
+        System.out.println("Trying to login with username: " + loginModel.getUsername());
+        System.out.println("Password length: " + loginModel.getPassword().length());
+        System.out.println("Total users in system: " + userService.getTotalUsers());
         
-        redirectAttributes.addFlashAttribute("error", "Invalid username or password");
-        return "redirect:/login";
+        UserModel user = userService.authenticateUser(
+            loginModel.getUsername(), 
+            loginModel.getPassword()
+        );
+        
+        if (user != null) {
+            System.out.println("LOGIN SUCCESS for: " + user.getUsername());
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("firstName", user.getFirstName());
+            session.setAttribute("lastName", user.getLastName());
+            session.setAttribute("email", user.getEmail());
+            session.setAttribute("isLoggedIn", true);
+            
+            if (userService.isAdmin(user.getUsername())) {
+                session.setAttribute("role", "ADMIN");
+                return "redirect:/admin/dashboard";
+            } else {
+                session.setAttribute("role", "USER");
+                return "redirect:/user/dashboard";
+            }
+        } else {
+            System.out.println("LOGIN FAILED - Invalid credentials");
+            model.addAttribute("error", "Invalid username or password");
+            model.addAttribute("loginModel", loginModel);
+            return "login";
+        }
     }
     
     @GetMapping("/logout")
-    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+    public String logout(HttpSession session) {
         session.invalidate();
-        redirectAttributes.addFlashAttribute("message", "Logged out successfully!");
-        return "redirect:/";
+        return "redirect:/login?logout";
     }
 }

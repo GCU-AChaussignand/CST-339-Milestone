@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Campus Bookstore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --nav-bg: #e8e8e8;
+            --sidebar-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-color: #d0d0d0;
+        }
+        
+        body {
+            background-color: #fafafa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+        }
+        
+        .top-navbar {
+            background-color: var(--nav-bg);
+            border-bottom: 2px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .brand-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .top-nav-buttons button {
+            background-color: #6c757d;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            margin-left: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .user-container {
+            display: flex;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .sidebar {
+            width: 220px;
+            background-color: var(--sidebar-bg);
+            border-right: 2px solid var(--border-color);
+            padding: 1.5rem 0;
+        }
+        
+        .sidebar-title {
+            font-weight: 600;
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: #555;
+            text-decoration: none;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover,
+        .nav-item.active {
+            background-color: #d8d8d8;
+            border-left-color: #6c757d;
+            color: #333;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+        }
+        
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+        
+        .order-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .order-id {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .order-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .status-badge {
+            padding: 0.4rem 0.9rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-shipped {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-delivered {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .order-items {
+            margin: 1rem 0;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .item-name {
+            font-weight: 500;
+        }
+        
+        .item-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-color);
+        }
+        
+        .action-btn {
+            background-color: #6c757d;
+            border: 1px solid #5a6268;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+        }
+        
+        .action-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #999;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-navbar">
+        <div class="brand-title">CAMPUS BOOKSTORE</div>
+        <div class="top-nav-buttons">
+            <button onclick="location.href='/'">Home</button>
+            <button onclick="location.href='/products'">Shop</button>
+            <button onclick="location.href='/logout'">Logout</button>
+        </div>
+    </div>
+
+    <div class="user-container">
+        <aside class="sidebar">
+            <div class="sidebar-title">My Account</div>
+            <a href="/user/dashboard" class="nav-item">Dashboard</a>
+            <a href="/user/profile" class="nav-item">My Profile</a>
+            <a href="/user/orders" class="nav-item active">My Orders</a>
+            <a href="/cart" class="nav-item">My Cart</a>
+            <a href="/products" class="nav-item">Browse Books</a>
+        </aside>
+
+        <main class="main-content">
+            <h1 class="page-title">My Orders</h1>
+
+            <!-- Sample Order 1 -->
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <div class="order-id">Order #ORD-2045</div>
+                        <div class="order-date">Placed on October 15, 2025</div>
+                    </div>
+                    <span class="status-badge status-pending">Pending</span>
+                </div>
+                
+                <div class="order-items">
+                    <div class="order-item">
+                        <div>
+                            <div class="item-name">Introduction to Algorithms</div>
+                            <div class="item-details">Quantity: 1 × $89.99</div>
+                        </div>
+                        <div>$89.99</div>
+                    </div>
+                    <div class="order-item">
+                        <div>
+                            <div class="item-name">Database System Concepts</div>
+                            <div class="item-details">Quantity: 1 × $76.00</div>
+                        </div>
+                        <div>$76.00</div>
+                    </div>
+                </div>
+                
+                <div class="order-total">
+                    <span>Total:</span>
+                    <span>$165.99</span>
+                </div>
+                
+                <div class="mt-3">
+                    <button class="action-btn" onclick="alert('Order tracking will be available in Milestone 4')">Track Order</button>
+                    <button class="action-btn" onclick="alert('Order details will be available in Milestone 4')">View Details</button>
+                </div>
+            </div>
+
+            <!-- Sample Order 2 -->
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <div class="order-id">Order #ORD-2032</div>
+                        <div class="order-date">Placed on October 10, 2025</div>
+                    </div>
+                    <span class="status-badge status-shipped">Shipped</span>
+                </div>
+                
+                <div class="order-items">
+                    <div class="order-item">
+                        <div>
+                            <div class="item-name">Calculus Early Transcendentals</div>
+                            <div class="item-details">Quantity: 1 × $89.99</div>
+                        </div>
+                        <div>$89.99</div>
+                    </div>
+                </div>
+                
+                <div class="order-total">
+                    <span>Total:</span>
+                    <span>$89.99</span>
+                </div>
+                
+                <div class="mt-3">
+                    <button class="action-btn" onclick="alert('Order tracking will be available in Milestone 4')">Track Shipment</button>
+                    <button class="action-btn" onclick="alert('Order details will be available in Milestone 4')">View Details</button>
+                </div>
+            </div>
+
+            <!-- Sample Order 3 -->
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <div class="order-id">Order #ORD-2018</div>
+                        <div class="order-date">Placed on October 5, 2025</div>
+                    </div>
+                    <span class="status-badge status-delivered">Delivered</span>
+                </div>
+                
+                <div class="order-items">
+                    <div class="order-item">
+                        <div>
+                            <div class="item-name">Chemistry: The Central Science</div>
+                            <div class="item-details">Quantity: 2 × $95.00</div>
+                        </div>
+                        <div>$190.00</div>
+                    </div>
+                    <div class="order-item">
+                        <div>
+                            <div class="item-name">Introduction to Psychology</div>
+                            <div class="item-details">Quantity: 1 × $75.99</div>
+                        </div>
+                        <div>$75.99</div>
+                    </div>
+                </div>
+                
+                <div class="order-total">
+                    <span>Total:</span>
+                    <span>$265.99</span>
+                </div>
+                
+                <div class="mt-3">
+                    <button class="action-btn" onclick="alert('Leave a review feature coming in Milestone 4')">Leave Review</button>
+                    <button class="action-btn" onclick="alert('Reorder feature coming in Milestone 4')">Reorder</button>
+                </div>
+            </div>
+
+            <!-- Empty State (hidden when orders exist) -->
+            <!-- 
+            <div class="order-card empty-state">
+                <div class="empty-icon">📦</div>
+                <h3>No Orders Yet</h3>
+                <p>You haven't placed any orders yet. Start shopping to see your order history here!</p>
+                <button class="action-btn" onclick="location.href='/products'">Browse Products</button>
+            </div>
+            -->
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
