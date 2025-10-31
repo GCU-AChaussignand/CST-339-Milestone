@@ -1,0 +1,83 @@
+-- Create Database (if not exists)
+CREATE DATABASE IF NOT EXISTS campus_bookstore;
+USE campus_bookstore;
+
+-- Drop existing tables if they exist (for clean setup)
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS users;
+
+-- Create Users Table
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    phone_number VARCHAR(20) NOT NULL,
+    username VARCHAR(20) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) DEFAULT 'USER',
+    INDEX idx_username (username),
+    INDEX idx_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Create Books Table
+CREATE TABLE books (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL,
+    author VARCHAR(200) NOT NULL,
+    isbn VARCHAR(17) NOT NULL UNIQUE,
+    course VARCHAR(20) NOT NULL,
+    subject VARCHAR(50) NOT NULL,
+    price DOUBLE NOT NULL,
+    stock INT NOT NULL DEFAULT 0,
+    image_url VARCHAR(500),
+    description TEXT,
+    INDEX idx_title (title),
+    INDEX idx_isbn (isbn),
+    INDEX idx_course (course),
+    INDEX idx_subject (subject)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Insert Default Users
+INSERT INTO users (first_name, last_name, email, phone_number, username, password, role) VALUES
+('Admin', 'User', 'admin@bookstore.com', '555-123-4567', 'admin', 'password', 'ADMIN'),
+('John', 'Doe', 'user@bookstore.com', '555-987-6543', 'user', 'password', 'USER');
+
+-- Insert Sample Books (10 initial books)
+INSERT INTO books (title, author, isbn, course, subject, price, stock, description) VALUES
+('Introduction to Algorithms', 'Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest', '978-0262033848', 'CST-339', 'Computer Science', 89.99, 25, 'Comprehensive guide to algorithms and data structures'),
+('Calculus Early Transcendentals', 'James Stewart', '978-1285741550', 'MATH-210', 'Mathematics', 120.00, 18, 'Complete calculus textbook with examples'),
+('Chemistry: The Central Science', 'Theodore E. Brown, H. Eugene LeMay', '978-0134414232', 'CHEM-101', 'Chemistry', 95.00, 8, 'Fundamental chemistry concepts and applications'),
+('Introduction to Psychology', 'James W. Kalat', '978-1305271555', 'PSY-101', 'Psychology', 75.99, 30, 'Introduction to psychological concepts and research'),
+('Java: How to Program', 'Paul Deitel, Harvey Deitel', '978-0134743356', 'CST-239', 'Computer Science', 110.00, 15, 'Complete Java programming guide with examples'),
+('Database System Concepts', 'Abraham Silberschatz, Henry F. Korth', '978-0078022159', 'CST-345', 'Computer Science', 95.50, 12, 'Database design and implementation fundamentals'),
+('Physics for Scientists and Engineers', 'Raymond A. Serway, John W. Jewett', '978-1285737027', 'PHY-201', 'Physics', 135.00, 10, 'Comprehensive physics textbook with applications'),
+('Principles of Economics', 'N. Gregory Mankiw', '978-0538453059', 'ECON-101', 'Economics', 89.00, 20, 'Introduction to microeconomics and macroeconomics'),
+('Operating System Concepts', 'Abraham Silberschatz, Peter B. Galvin', '978-1118063330', 'CST-340', 'Computer Science', 105.99, 14, 'Operating systems principles and design'),
+('Statistics for Business and Economics', 'Paul Newbold, William L. Carlson', '978-0134506593', 'STAT-250', 'Statistics', 98.50, 16, 'Statistical methods for business analysis');
+
+-- Insert Additional Books (to test pagination)
+INSERT INTO books (title, author, isbn, course, subject, price, stock, description) VALUES
+('Data Structures and Algorithms in Java', 'Michael T. Goodrich', '978-1118771334', 'CST-239', 'Computer Science', 99.99, 22, 'Comprehensive coverage of data structures'),
+('Linear Algebra and Its Applications', 'David C. Lay', '978-0321982384', 'MATH-250', 'Mathematics', 115.00, 14, 'Modern approach to linear algebra'),
+('Biology: Concepts and Investigations', 'Mariëlle Hoefnagels', '978-1260169621', 'BIO-101', 'Biology', 89.50, 19, 'Introduction to biological sciences'),
+('Fundamentals of Corporate Finance', 'Stephen Ross, Randolph Westerfield', '978-1259918957', 'FIN-301', 'Finance', 125.00, 11, 'Core principles of corporate finance'),
+('Discrete Mathematics and Its Applications', 'Kenneth Rosen', '978-1259676512', 'MATH-280', 'Mathematics', 105.00, 17, 'Comprehensive discrete mathematics text'),
+('Artificial Intelligence: A Modern Approach', 'Stuart Russell, Peter Norvig', '978-0136042594', 'CST-445', 'Computer Science', 145.00, 8, 'Leading AI textbook'),
+('Microeconomics', 'Paul Krugman, Robin Wells', '978-1319098780', 'ECON-201', 'Economics', 95.00, 13, 'Principles of microeconomics'),
+('Organic Chemistry', 'Paula Yurkanis Bruice', '978-0134042282', 'CHEM-201', 'Chemistry', 135.00, 9, 'Comprehensive organic chemistry'),
+('World History', 'William J. Duiker', '978-1305091221', 'HIST-101', 'History', 79.99, 24, 'Global history survey'),
+('Marketing Management', 'Philip Kotler, Kevin Lane Keller', '978-0134236933', 'MKT-301', 'Business', 119.00, 15, 'Marketing strategy and management'),
+('Software Engineering', 'Ian Sommerville', '978-0133943030', 'CST-450', 'Computer Science', 125.00, 10, 'Modern software engineering practices'),
+('Calculus: Single Variable', 'James Stewart', '978-1305266636', 'MATH-211', 'Mathematics', 110.00, 16, 'Single variable calculus'),
+('General Chemistry', 'Darrell D. Ebbing', '978-1305580343', 'CHEM-102', 'Chemistry', 99.00, 20, 'General chemistry principles'),
+('Computer Networks', 'Andrew S. Tanenbaum', '978-0132126953', 'CST-370', 'Computer Science', 115.00, 12, 'Computer networking fundamentals'),
+('Macroeconomics', 'N. Gregory Mankiw', '978-1319105990', 'ECON-202', 'Economics', 92.00, 18, 'Macroeconomic theory and policy');
+
+-- Verify Data
+SELECT COUNT(*) as total_books FROM books;
+SELECT COUNT(*) as total_users FROM users;
+
+-- Show sample data
+SELECT * FROM books LIMIT 5;
+SELECT * FROM users;

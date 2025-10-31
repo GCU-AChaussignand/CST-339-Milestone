@@ -67,33 +67,30 @@ public class ProductController {
      * @return String redirect path or view name
      */
     @PostMapping("/create")
-    public String processCreate(@Valid BookModel bookModel, 
-                                BindingResult result,
-                                Model model,
-                                HttpSession session) {
-        
-        // Check authentication
-        String role = (String) session.getAttribute("role");
-        if (role == null || !"ADMIN".equals(role)) {
-            return "redirect:/login";
-        }
-        
-        // Check for validation errors
-        if (result.hasErrors()) {
-            model.addAttribute("mode", "create");
-            return "product-form";
-        }
-        
-        // Add product via service
-        boolean success = bookService.addBook(bookModel);
-        
-        if (success) {
-            // Redirect to admin products page with success message
-            return "redirect:/admin/products?created";
-        } else {
-            model.addAttribute("error", "Failed to create product. Please try again.");
-            model.addAttribute("mode", "create");
-            return "product-form";
-        }
+public String processCreate(@Valid BookModel bookModel, 
+                           BindingResult result,
+                           Model model,
+                           HttpSession session) {
+    // Check authentication
+    String role = (String) session.getAttribute("role");
+    if (role == null || !"ADMIN".equals(role)) {
+        return "redirect:/login";
     }
+    
+    // Check for validation errors
+    if (result.hasErrors()) {
+        model.addAttribute("mode", "create");
+        return "product-form";
+    }
+    
+    // Add product via service
+    try {
+        bookService.saveBook(bookModel);
+        return "redirect:/admin/products?created";
+    } catch (IllegalArgumentException e) {
+        model.addAttribute("error", "Failed to create product: " + e.getMessage());
+        model.addAttribute("mode", "create");
+        return "product-form";
+    }
+}
 }

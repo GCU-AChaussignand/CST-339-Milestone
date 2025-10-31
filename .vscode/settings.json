@@ -1,3 +1,8 @@
 {
-    "sqltools.connections": []
+    "sqltools.connections": [],
+    "mssql.enabled": false,
+    "files.associations": {
+        "*.mysql": "mysql",
+        "schema.sql": "mysql"
+    }
 }

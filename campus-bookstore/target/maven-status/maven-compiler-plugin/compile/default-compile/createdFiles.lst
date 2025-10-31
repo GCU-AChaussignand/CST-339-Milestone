@@ -1,8 +1,15 @@
 com/gcu/bookstore/controller/LoginController.class
+com/gcu/bookstore/repository/BookRepository.class
+com/gcu/bookstore/repository/UserRepository.class
+com/gcu/bookstore/DumpDatabaseToText.class
+com/gcu/bookstore/model/UserModel.class
 com/gcu/bookstore/service/UserService.class
 com/gcu/bookstore/controller/UserController.class
 com/gcu/bookstore/service/BookService.class
+com/gcu/bookstore/controller/ProductController.class
 com/gcu/bookstore/model/LoginModel.class
+com/gcu/bookstore/repository/BookRepositoryImpl.class
+com/gcu/bookstore/repository/UserRepositoryImpl.class
 com/gcu/bookstore/controller/AdminController.class
 com/gcu/bookstore/controller/RegistrationController.class
 com/gcu/bookstore/controller/PageController.class

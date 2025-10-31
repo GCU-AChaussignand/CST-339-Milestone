@@ -14,14 +14,14 @@ import com.gcu.bookstore.service.BookService;
 
 /**
  * Page Controller
- * Handles navigation for public pages
+ * Handles navigation for public pages with pagination support
  */
 @Controller
 public class PageController {
-    
+
     @Autowired
     private BookService bookService;
-    
+
     /**
      * Display home page
      */
@@ -29,31 +29,64 @@ public class PageController {
     public String home() {
         return "home";
     }
-    
+
     /**
-     * Display products page with optional search
+     * Display products page with optional search and pagination
      */
     @GetMapping("/products")
-    public String products(@RequestParam(required = false) String search, Model model) {
-        List<BookModel> books;
+    public String products(
+            @RequestParam(required = false) String search, 
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            Model model) {
+        
+        // Validate page and size parameters
+        if (page < 1) page = 1;
+        if (size < 5) size = 5;
+        if (size > 50) size = 50; // Max items per page
+        
+        List<BookModel> allBooks;
         
         if (search != null && !search.trim().isEmpty()) {
-            books = bookService.searchBooks(search);
+            allBooks = bookService.searchBooks(search);
             model.addAttribute("searchQuery", search);
             model.addAttribute("searchPerformed", true);
         } else {
-            books = bookService.getAllBooks();
+            allBooks = bookService.getAllBooks();
             model.addAttribute("searchPerformed", false);
         }
+
+        // Calculate pagination
+        int totalBooks = allBooks.size();
+        int totalPages = (int) Math.ceil((double) totalBooks / size);
         
-        model.addAttribute("books", books);
-        model.addAttribute("resultCount", books.size());
+        // Ensure page is within bounds
+        if (page > totalPages && totalPages > 0) {
+            page = totalPages;
+        }
+        
+        // Calculate start and end indices
+        int startIndex = (page - 1) * size;
+        int endIndex = Math.min(startIndex + size, totalBooks);
+        
+        // Get books for current page
+        List<BookModel> booksForPage = allBooks.subList(startIndex, endIndex);
+        
+        // Add attributes to model
+        model.addAttribute("books", booksForPage);
+        model.addAttribute("resultCount", totalBooks);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("pageSize", size);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("startIndex", startIndex + 1);
+        model.addAttribute("endIndex", endIndex);
+        
         return "products";
     }
-    
+
     /**
      * Display individual book details
-     * 
+     *
      * @param id Book ID
      * @param model Spring Model
      * @return book details view
@@ -61,15 +94,15 @@ public class PageController {
     @GetMapping("/products/{id}")
     public String bookDetails(@PathVariable Long id, Model model) {
         BookModel book = bookService.getBookById(id);
-        
+
         if (book == null) {
             return "redirect:/products";
         }
-        
+
         model.addAttribute("book", book);
         return "book-details";
     }
-    
+
     /**
      * Handle search from home page
      */
@@ -78,7 +111,7 @@ public class PageController {
         // Redirect to products page with search parameter
         return "redirect:/products?search=" + query;
     }
-    
+
     /**
      * Display cart page
      */
@@ -86,7 +119,7 @@ public class PageController {
     public String cart() {
         return "cart";
     }
-    
+
     /**
      * Display checkout page
      */
