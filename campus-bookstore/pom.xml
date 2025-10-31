@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<<<<<<< HEAD
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
          https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -18,22 +19,52 @@
     <name>campus-bookstore</name>
     <description>Campus Bookstore Application - CST-339 Milestone Project</description>
     
+=======
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.gcu.bookstore</groupId>
+    <artifactId>campus-bookstore</artifactId>
+    <version>1.0.0</version>
+    <name>Campus Bookstore</name>
+
+    <!-- Spring Boot parent -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.4</version> <!-- Use latest stable instead of nightly 3.5.x -->
+        <relativePath/>
+    </parent>
+
+>>>>>>> 3f437380464191bf3e42c033828d31a3d94f4cf5
     <properties>
         <java.version>17</java.version>
     </properties>
     
     <dependencies>
+<<<<<<< HEAD
         <!-- Spring Boot Starter Web -->
+=======
+        <!-- Core Spring Boot Web -->
+>>>>>>> 3f437380464191bf3e42c033828d31a3d94f4cf5
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+<<<<<<< HEAD
         
         <!-- Spring Boot Starter Thymeleaf -->
+=======
+
+        <!-- Thymeleaf Template Engine -->
+>>>>>>> 3f437380464191bf3e42c033828d31a3d94f4cf5
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+<<<<<<< HEAD
         
         <!-- Spring Boot Starter Data JPA -->
         <dependency>
@@ -42,36 +73,73 @@
         </dependency>
         
         <!-- MySQL Connector -->
+=======
+
+        <!-- Spring JDBC (not JPA) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <!-- MySQL Driver -->
+>>>>>>> 3f437380464191bf3e42c033828d31a3d94f4cf5
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
         </dependency>
+<<<<<<< HEAD
         
         <!-- Spring Boot Starter Validation -->
+=======
+
+        <!-- Validation -->
+>>>>>>> 3f437380464191bf3e42c033828d31a3d94f4cf5
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+<<<<<<< HEAD
         
         <!-- Spring Boot DevTools (Optional - for hot reload) -->
+=======
+
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- DevTools for Hot Reload -->
+>>>>>>> 3f437380464191bf3e42c033828d31a3d94f4cf5
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+<<<<<<< HEAD
         
         <!-- Spring Boot Starter Test -->
+=======
+
+        <!-- Tests -->
+>>>>>>> 3f437380464191bf3e42c033828d31a3d94f4cf5
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 3f437380464191bf3e42c033828d31a3d94f4cf5
     <build>
         <plugins>
+            <!-- Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
